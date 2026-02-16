@@ -1,0 +1,26 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: azure;
+    color:black;
+
+}
+p{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: small;
+    padding: 0px;
+    
+}
+
+
+
+/* Footer */
+footer {
+    background-color: rgb(10, 1, 1); 
+}
+footer p {
+    margin: 0;
+}
+
+footer a:hover {
+    color: rgb(192, 188, 188);
+}
