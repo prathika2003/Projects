@@ -1,0 +1,49 @@
+{% extends "shared/base.html" %}
+{% block title %}Interview Results | AI Career Coach{% endblock %}
+{% block content %}
+<section class="dashboard-head">
+    <div>
+        <p class="eyebrow">Evaluation complete</p>
+        <h1>Your score is {{ result.score }}/100</h1>
+    </div>
+    <a class="button" href="{{ url_for('candidate.dashboard') }}">Back to Dashboard</a>
+</section>
+
+<section class="grid two">
+    <article class="panel">
+        <h2>Strengths</h2>
+        <ul class="clean-list">
+            {% for item in result.strengths %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </article>
+    <article class="panel">
+        <h2>Areas to Improve</h2>
+        <ul class="clean-list">
+            {% for item in result.weaknesses %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </article>
+</section>
+
+<section class="grid two">
+    <article class="panel">
+        <h2>Improvement Tips</h2>
+        <ul class="clean-list">
+            {% for item in result.improvement_tips %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </article>
+    <article class="panel">
+        <h2>Study Resources</h2>
+        <ul class="clean-list">
+            {% for item in result.study_plan %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </article>
+</section>
+{% endblock %}

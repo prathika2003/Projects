@@ -1,0 +1,110 @@
+{% extends "shared/base.html" %}
+{% block title %}Dashboard | AI Career Coach{% endblock %}
+{% block content %}
+<section class="dashboard-head">
+    <div>
+        <p class="eyebrow">Candidate dashboard</p>
+        <h1>Hello, {{ user.name }}</h1>
+    </div>
+    <a class="button" href="{{ url_for('candidate.upload_resume') }}">Upload Resume</a>
+</section>
+
+<section class="grid two">
+    <article class="panel">
+        <h2>Resume Analysis</h2>
+        {% if latest_resume and latest_resume.analysis %}
+            {% set matches = latest_resume.analysis.match_percentages %}
+            <div class="metric-row">
+                {% if matches is mapping %}
+                    {% for role, percent in matches.items() %}
+                        <div class="metric">
+                            <strong>{{ percent }}%</strong>
+                            <span>{{ role }}</span>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="metric">
+                        <strong>0%</strong>
+                        <span>Role match pending</span>
+                    </div>
+                {% endif %}
+            </div>
+            <h3>Skills extracted</h3>
+            <div class="tag-row">
+                {% for skill in latest_resume.analysis.skills %}
+                    <span class="tag">{{ skill }}</span>
+                {% endfor %}
+            </div>
+            <h3>Weak skill areas</h3>
+            {% set weak_areas = latest_resume.analysis.weak_skill_areas %}
+            <ul class="clean-list">
+                {% if weak_areas is mapping %}
+                    {% for role, gaps in weak_areas.items() %}
+                        <li><strong>{{ role }}:</strong> {{ gaps|join(', ') if gaps is sequence and gaps is not string else gaps if gaps else 'No major gaps detected' }}</li>
+                    {% endfor %}
+                {% elif weak_areas is sequence and weak_areas is not string %}
+                    <li><strong>General:</strong> {{ weak_areas|join(', ') if weak_areas else 'No major gaps detected' }}</li>
+                {% else %}
+                    <li><strong>General:</strong> {{ weak_areas if weak_areas else 'No major gaps detected' }}</li>
+                {% endif %}
+            </ul>
+        {% else %}
+            <p class="muted">Upload a resume to unlock skill extraction and role matching.</p>
+        {% endif %}
+    </article>
+
+    <article class="panel">
+        <h2>Start Mock Interview</h2>
+        <form method="post" action="{{ url_for('candidate.start_interview') }}" class="stack">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <label>Role preference
+                <select name="role">
+                    <option value="Frontend">Frontend</option>
+                    <option value="Python" selected>Python</option>
+                    <option value="Data Analyst">Data Analyst</option>
+                </select>
+            </label>
+            <button type="submit">Start Mock Interview</button>
+        </form>
+    </article>
+</section>
+
+<section class="panel">
+    <h2>Interview History</h2>
+    {% if interviews %}
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr><th>Date</th><th>Role</th><th>Score</th><th>Top gaps</th></tr>
+                </thead>
+                <tbody>
+                    {% for interview in interviews %}
+                        <tr>
+                            <td>{{ interview.date.strftime('%d %b %Y') }}</td>
+                            <td>{{ interview.role }}</td>
+                            <td><strong>{{ interview.score }}/100</strong></td>
+                            <td>{{ interview.details.evaluation.recommended_skill_gaps|join(', ') }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="muted">Your completed mock interviews will appear here.</p>
+    {% endif %}
+</section>
+
+{% if jobs %}
+<section class="panel">
+    <h2>Open Job Roles</h2>
+    <div class="job-list">
+        {% for job in jobs %}
+            <article>
+                <h3>{{ job.title }}</h3>
+                <p>{{ job.description }}</p>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+{% endblock %}

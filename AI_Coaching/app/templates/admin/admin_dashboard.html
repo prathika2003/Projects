@@ -1,0 +1,83 @@
+{% extends "shared/base.html" %}
+{% block title %}Recruiter Dashboard | AI Career Coach{% endblock %}
+{% block content %}
+<section class="dashboard-head">
+    <div>
+        <p class="eyebrow">Admin / Recruiter</p>
+        <h1>Candidate performance and job roles</h1>
+    </div>
+</section>
+
+<section class="grid two">
+    <article class="panel">
+        <h2>Create Job Role</h2>
+        <form method="post" class="stack validate-form" novalidate>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <label>Title
+                <input type="text" name="title" required>
+            </label>
+            <label>Description
+                <textarea name="description" rows="5" required></textarea>
+            </label>
+            <button type="submit">Create Role</button>
+        </form>
+    </article>
+
+    <article class="panel">
+        <h2>Search Candidates by Score</h2>
+        <form method="get" class="stack">
+            <label>Minimum score
+                <input type="number" name="min_score" min="0" max="100" value="{{ min_score or '' }}">
+            </label>
+            <button type="submit">Search</button>
+        </form>
+    </article>
+</section>
+
+<section class="panel">
+    <h2>Candidate Performance</h2>
+    {% if performances %}
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr><th>Candidate</th><th>Email</th><th>Role</th><th>Score</th><th>Skill gaps</th><th>Date</th></tr>
+                </thead>
+                <tbody>
+                    {% for interview, user in performances %}
+                        <tr>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ interview.role }}</td>
+                            <td><strong>{{ interview.score }}/100</strong></td>
+                            <td>{{ interview.details.evaluation.recommended_skill_gaps|join(', ') }}</td>
+                            <td>{{ interview.date.strftime('%d %b %Y') }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="muted">No candidate interviews match the current search.</p>
+    {% endif %}
+</section>
+
+<section class="panel">
+    <h2>Job Roles</h2>
+    {% if jobs %}
+        <div class="job-list">
+            {% for job in jobs %}
+                <article>
+                    <h3>{{ job.title }}</h3>
+                    <p>{{ job.description }}</p>
+                    <form method="post" action="{{ url_for('admin.delete_job', job_id=job.id) }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="button-danger" type="submit">Delete</button>
+                    </form>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="muted">Create the first role to share it with candidates.</p>
+    {% endif %}
+</section>
+{% endblock %}

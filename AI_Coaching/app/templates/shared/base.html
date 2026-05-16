@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}AI Career Coach{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script defer src="{{ url_for('static', filename='js/main.js') }}"></script>
+</head>
+<body>
+    <div class="ambient-grid" aria-hidden="true"></div>
+    <header class="site-header">
+        <a class="brand" href="{{ url_for('candidate.dashboard') }}">
+            <span class="brand-mark">AI</span>
+            <span>Career Coach</span>
+        </a>
+        <nav class="nav">
+            {% if session.get('user_id') %}
+                <a href="{{ url_for('candidate.dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('candidate.profile') }}">Profile</a>
+                {% if session.get('user_role') == 'admin' %}
+                    <a href="{{ url_for('admin.admin_dashboard') }}">Recruiter</a>
+                {% endif %}
+                <a href="{{ url_for('auth.logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('auth.login') }}">Login</a>
+                <a class="button-small" href="{{ url_for('auth.register') }}">Register</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main class="page-shell">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <section class="flash-stack">
+                    {% for category, message in messages %}
+                        <div class="flash flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </section>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

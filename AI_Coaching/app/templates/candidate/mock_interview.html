@@ -1,0 +1,28 @@
+{% extends "shared/base.html" %}
+{% block title %}Mock Interview | AI Career Coach{% endblock %}
+{% block content %}
+<section class="dashboard-head">
+    <div>
+        <p class="eyebrow">{{ role }} interview</p>
+        <h1>Answer each question as if this were a live interview.</h1>
+    </div>
+</section>
+
+<form method="post" action="{{ url_for('candidate.evaluate_interview_route') }}" class="interview-form validate-form" novalidate>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="role" value="{{ role }}">
+    {% for item in questions %}
+        <article class="question-card">
+            <div class="question-meta">
+                <span>Question {{ loop.index }}</span>
+                <span class="difficulty">{{ item.difficulty }}</span>
+            </div>
+            <h2>{{ item.question }}</h2>
+            <label>Your answer
+                <textarea name="answer_{{ loop.index0 }}" rows="5" required minlength="20"></textarea>
+            </label>
+        </article>
+    {% endfor %}
+    <button type="submit">Submit for AI Evaluation</button>
+</form>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "shared/base.html" %}
+{% block title %}Register | AI Career Coach{% endblock %}
+{% block content %}
+<section class="auth-panel">
+    <div>
+        <p class="eyebrow">Start strong</p>
+        <h1>Create your career coaching workspace.</h1>
+    </div>
+    <form method="post" class="form-card validate-form" novalidate>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label>Name
+            <input type="text" name="name" required minlength="2" autocomplete="name">
+        </label>
+        <label>Email
+            <input type="email" name="email" required autocomplete="email">
+        </label>
+        <label>Password
+            <input type="password" name="password" required minlength="8" autocomplete="new-password">
+        </label>
+        <label>Account type
+            <select name="role" required>
+                <option value="candidate">Candidate</option>
+                <option value="admin">Admin / Recruiter</option>
+            </select>
+        </label>
+        <button type="submit">Register</button>
+        <p class="muted">Already registered? <a href="{{ url_for('auth.login') }}">Login</a></p>
+    </form>
+</section>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "shared/base.html" %}
+{% block title %}Upload Resume | AI Career Coach{% endblock %}
+{% block content %}
+<section class="narrow">
+    <p class="eyebrow">Resume intelligence</p>
+    <h1>Upload a PDF or DOCX resume.</h1>
+    <form method="post" enctype="multipart/form-data" class="form-card validate-form" novalidate>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label>Resume file
+            <input type="file" name="file" accept=".pdf,.docx" required>
+        </label>
+        <button type="submit">Analyze Resume</button>
+    </form>
+</section>
+{% endblock %}
