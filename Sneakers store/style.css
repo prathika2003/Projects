@@ -1,0 +1,154 @@
+/* General Reset */
+body {
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+    background-color: #f9f9f9; /* Light background for contrast */
+}
+
+/* Navigation Bar Styling */
+nav {
+    width: 100%;
+    background-color: black;
+    color: white;
+    font-size: 16px;
+}
+
+.navTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+}
+
+/* Logo Styling */
+.logo h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Search Bar Styling */
+.searchBar .search {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    width: 300px;
+    gap: 5px;
+}
+
+.SearchInput {
+    border: none;
+    outline: none;
+    padding: 5px;
+    font-size: 14px;
+    width: 100%;
+}
+
+.SearchIcon {
+    cursor: pointer;
+}
+
+/* Limited Offer Styling */
+.offer .limitedOffer {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    border-bottom: 2px solid green ;
+}
+
+/* Bottom Navigation Menu */
+.navBottom {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    background-color: black;
+    padding: 10px 0;
+}
+
+.menuItem {
+    margin: 0;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    color:lightgray;
+    font-weight: 400;
+}
+
+.menuItem:hover {
+    color: #00ff00;
+}
+
+.slider{
+    background:url("https://images.app.goo.gl/Ko3vLvmr49op29d9A");
+    overflow: hidden;
+}
+.sliderWrapper{
+    display: flex;
+    width: 500vw;
+    transition: all 1s ease-in-out;
+    top: 10px;
+}
+.sliderItem{
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: 10;
+}
+.sliderBg{
+    width: 750px;
+    height: 750px;
+    border-radius: 50%;
+    position: absolute;
+   
+}
+.sliderImg{
+    z-index: 1;
+    top: 10px;
+}
+.sliderTitle{
+    position: absolute;
+    top: 10%;
+    right: 10%;
+    font-size: 60px;
+    font-weight: 900;
+    text-align: center;
+    z-index: 1;
+}
+.sliderPrize{
+    position: absolute;
+    top: 10%;
+    left:  10%;
+    font-size: 60px;
+    font-weight: 300;
+    text-align: center;
+    border:1px solid gray;
+    z-index: 1;
+}
+.buyButton{
+    position: absolute;
+    top: 50%;
+    right:  10%;
+    font-size: 30px;
+    font-weight: 900;
+    border:1px solid gray;
+    z-index: 1;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+}
+.buyButton:hover{
+    background-color: white;
+    color: black;
+}
+.sliderItem:nth-child(1) .slideBg{
+    background-color: yellow;
+}
